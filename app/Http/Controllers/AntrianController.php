@@ -37,6 +37,22 @@ class AntrianController extends Controller
         $data->status = 'active';
         $data->save();
 
+        $result = $data;
+   
+
+        return response()->json($result);
+    }
+
+    public function UpdateAntrian(Request $r, $id){
+        $result = [];
+        $result['status'] = false;
+        $result['message'] = "something error"; 
+
+        $data = Antrian::find($id);
+
+        $data->status = 'nonactive';
+        $data->save();
+
         $result['data'] = $data;
         $result['status'] = true;
         $result['message'] = 'success';
@@ -44,14 +60,14 @@ class AntrianController extends Controller
         return response()->json($result);
     }
 
-    public function UpdateAntrian(Request $r){
+    public function UndoAntrian(Request $r, $id){
         $result = [];
         $result['status'] = false;
         $result['message'] = "something error"; 
 
-        $data = Antrian::where('nomor', $r->nomor)->first();
+        $data = Antrian::find($id);
 
-        $data->status = 'nonactive';
+        $data->status = 'active';
         $data->save();
 
         $result['data'] = $data;
